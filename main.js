@@ -1,3 +1,7 @@
+let tableAppeared = false;
+const body = document.querySelector("body");
+const table = document.createElement("table");
+
 let myLibrary = [];
 const submitButton = document.querySelector("button[type=submit");
 submitButton.addEventListener("click", (e) => {
@@ -18,8 +22,7 @@ function getData() {
 
 function createTable() {
   if (myLibrary.length === 0) return;
-  const body = document.querySelector("body");
-  const table = document.createElement("table");
+  table.innerHTML = ``;
   const firstRow = document.createElement("tr");
   firstRow.innerHTML += `             
                 <th>Nr</th>
@@ -36,12 +39,17 @@ function createTable() {
                 <td>${book.author}</td>
                 <td>${book.pages}</td>
                 <td>${book.read}</td>
-                <td><button>Delete</button></td>
+                <td><button data-key="${myLibrary.indexOf(
+                  book
+                )}">Delete</button></td>
     `;
     table.appendChild(row);
   }
   body.appendChild(table);
+  getDeleteOption();
+  tableAppeared = true;
 }
+
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -51,6 +59,23 @@ function Book(title, author, pages, read) {
   //   this.info = function () {
   //     return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`;
   //   };
+}
+
+function getDeleteOption() {
+  const deleteButtons = document.querySelectorAll("td>button");
+  deleteButtons.forEach((button) => {
+    button.addEventListener("click", (e) => {
+      console.log(myLibrary);
+      myLibrary.splice(button.dataset.key, 1);
+      console.log(myLibrary);
+      if (myLibrary.length === 0) {
+        table.innerHTML = ``;
+        tableAppeared = false;
+        return;
+      }
+      createTable();
+    });
+  });
 }
 
 const hobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, "not read yet");
