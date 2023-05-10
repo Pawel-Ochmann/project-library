@@ -1,19 +1,26 @@
 let tableAppeared = false;
 const body = document.querySelector("body");
 const table = document.createElement("table");
+const hobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, true);
+const diuna = new Book("The Diuna", "Frank Herbert", 784, false);
+const solaris = new Book("Solaris", "Stanisław Lem", 204, true);
 
 let myLibrary = [];
+myLibrary.push(hobbit, diuna, solaris);
+createTable();
+
 const submitButton = document.querySelector("button[type=submit");
 submitButton.addEventListener("click", (e) => {
   e.preventDefault();
   getData();
 });
 
+
 function getData() {
   const title = document.querySelector("#title").value;
   const author = document.querySelector("#author").value;
   const pages = document.querySelector("#pages").value;
-  const read = document.querySelector("#read").value;
+  const read = document.querySelector("#read").checked;
 
   const anotherBook = new Book(title, author, pages, read);
   myLibrary.push(anotherBook);
@@ -38,8 +45,12 @@ function createTable() {
                 <th>${book.title}</th>
                 <td>${book.author}</td>
                 <td>${book.pages}</td>
-                <td>${book.read}</td>
-                <td><button data-key="${myLibrary.indexOf(
+                <td>${
+                  book.read
+                }<input type='checkbox' class="readCheck" data-key="${myLibrary.indexOf(
+      book
+    )}"></td>
+                <td><button class="delete" data-key="${myLibrary.indexOf(
                   book
                 )}">Delete</button></td>
     `;
@@ -47,9 +58,9 @@ function createTable() {
   }
   body.appendChild(table);
   getDeleteOption();
+  addReadCheckbox();
   tableAppeared = true;
 }
-
 
 function Book(title, author, pages, read) {
   this.title = title;
@@ -62,7 +73,7 @@ function Book(title, author, pages, read) {
 }
 
 function getDeleteOption() {
-  const deleteButtons = document.querySelectorAll("td>button");
+  const deleteButtons = document.querySelectorAll(".delete");
   deleteButtons.forEach((button) => {
     button.addEventListener("click", (e) => {
       console.log(myLibrary);
@@ -78,8 +89,12 @@ function getDeleteOption() {
   });
 }
 
-const hobbit = new Book("The Hobbit", "J.R.R. Tolkien", 295, "not read yet");
-
-function addBookToLibrary() {
-  // do stuff here
-}
+function addReadCheckbox() {
+  const readCheckInputs = document.querySelectorAll(".readCheck");
+  readCheckInputs.forEach(input=> {
+    input.addEventListener('click', (e)=> {
+      myLibrary[input.dataset.key].read = input.checked;
+      createTable();
+    })
+  })
+  }
