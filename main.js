@@ -15,7 +15,6 @@ submitButton.addEventListener("click", (e) => {
   getData();
 });
 
-
 function getData() {
   const title = document.querySelector("#title").value;
   const author = document.querySelector("#author").value;
@@ -39,6 +38,12 @@ function createTable() {
                 <th>Read</th>`;
   table.appendChild(firstRow);
   for (book of myLibrary) {
+    let readChecked = "";
+    console.log(book.read);
+    if (book.read===true) {
+      readChecked = "checked";
+    }
+
     const row = document.createElement("tr");
     row.innerHTML = `
                 <th>${myLibrary.indexOf(book) + 1}</th>
@@ -49,7 +54,7 @@ function createTable() {
                   book.read
                 }<input type='checkbox' class="readCheck" data-key="${myLibrary.indexOf(
       book
-    )}"></td>
+    )}" ${readChecked}></td>
                 <td><button class="delete" data-key="${myLibrary.indexOf(
                   book
                 )}">Delete</button></td>
@@ -91,10 +96,14 @@ function getDeleteOption() {
 
 function addReadCheckbox() {
   const readCheckInputs = document.querySelectorAll(".readCheck");
-  readCheckInputs.forEach(input=> {
-    input.addEventListener('click', (e)=> {
+  readCheckInputs.forEach((input) => {
+    input.addEventListener("click", (e) => {
       myLibrary[input.dataset.key].read = input.checked;
       createTable();
-    })
-  })
-  }
+    });
+  });
+}
+
+Book.prototype.toggleRead = function () {
+  this.read = !this.read;
+};
