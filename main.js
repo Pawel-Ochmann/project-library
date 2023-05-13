@@ -69,10 +69,14 @@ function createTable() {
                 <td>
                 <div class="readBox">
                 ${book.bookInfo(book.read)}
-                <input type='checkbox' class="readCheck" data-key="${myLibrary.indexOf(book)}" ${readChecked}>
+                <input type='checkbox' class="readCheck" data-key="${myLibrary.indexOf(
+                  book
+                )}" ${readChecked}>
                 </div>
                 </td>
-                <td><button class="delete" data-key="${myLibrary.indexOf(book)}">Delete</button></td>`;
+                <td><button class="delete" data-key="${myLibrary.indexOf(
+                  book
+                )}">Delete</button></td>`;
     table.appendChild(row);
   }
   body.appendChild(table);
