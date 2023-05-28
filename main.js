@@ -1,3 +1,5 @@
+// using class syntax this time
+
 let tableAppeared = false;
 const body = document.querySelector('body');
 const table = document.createElement('table');
