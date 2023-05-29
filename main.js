@@ -3,37 +3,29 @@
 let tableAppeared = false;
 const body = document.querySelector('body');
 const table = document.createElement('table');
-function Book(title, author, pages, read) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.read = read;
-  this.wasRead = 'Has been read';
-  this.notRead = 'Not read yet';
-  //   this.info = function () {
-  //     return `${this.title} by ${this.author}, ${this.pages} pages, ${this.read}.`;
-  //   };
-}
 
-function toggleRead() {
-  this.read = !this.read;
-  createTable();
+class Book {
+  constructor(title, author, pages, read) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.read = read;
+    this.wasRead = 'Has been read';
+    this.notRead = 'Not read yet';
+  }
+  toggleRead() {
+    this.read = !this.read;
+    createTable();
+  }
+  bookInfo(boolean) {
+    if (boolean) return this.wasRead;
+    return this.notRead;
+  }
 }
-
-function bookInfo(boolean) {
-  if (boolean) return this.wasRead;
-  return this.notRead;
-}
-
-Book.prototype = {
-  toggleRead,
-  bookInfo,
-};
 
 const hobbit = new Book('The Hobbit', 'J.R.R. Tolkien', 295, true);
 const diuna = new Book('The Diuna', 'Frank Herbert', 784, false);
 const solaris = new Book('Solaris', 'Stanisław Lem', 204, true);
-console.log(Book.prototype);
 
 const myLibrary = [];
 myLibrary.push(hobbit, diuna, solaris);
