@@ -13,10 +13,12 @@ class Book {
     this.wasRead = 'Has been read';
     this.notRead = 'Not read yet';
   }
+
   toggleRead() {
     this.read = !this.read;
     createTable();
   }
+
   bookInfo(boolean) {
     if (boolean) return this.wasRead;
     return this.notRead;
